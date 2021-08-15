@@ -1,7 +1,9 @@
 import argparse
 import os.path as osp
 import glob
-from mmaction.datasets.utils import (parse_directory,
+import sys
+
+from datasets.utils import (parse_directory,
                                      parse_hmdb51_splits,
                                      parse_ucf101_splits,
                                      parse_kinetics_splits,
