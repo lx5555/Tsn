@@ -37,7 +37,7 @@ args = parser.parse_args()
 
 
 if args.dataset == 'ucf101':
-    num_class = 20
+    num_class = 8
 elif args.dataset == 'hmdb51':
     num_class = 51
 elif args.dataset == 'kinetics':

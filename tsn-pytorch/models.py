@@ -195,16 +195,22 @@ TSN Configurations:
             input = self._get_diff(input)
 
         base_out = self.base_model.forward(input.view((-1, sample_len) + input.size()[-2:]))
+        print("base_model:",base_out.size())
 
         if self.dropout > 0:
             base_out = self.new_fc(base_out)
+
+        print("change fc size:",base_out.size())
 
         if not self.before_softmax:
             base_out = self.softmax(base_out)
         if self.reshape:
             base_out = base_out.view((-1, self.num_segments) + base_out.size()[1:])
 
+        print("self.reshape size:",base_out.size())
         output = self.consensus.forward(base_out)
+        print("consensus size:",output.size())
+        print("output.squeeze(1) size:",output.squeeze(1))
         return output.squeeze(1)
 
     def _get_diff(self, input, keep_rgb=False):

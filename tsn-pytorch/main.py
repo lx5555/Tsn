@@ -24,7 +24,7 @@ def main():
     args = parser.parse_args()
 
     if args.dataset == 'ucf101':
-        num_class = 20
+        num_class = 8
     elif args.dataset == 'hmdb51':
         num_class = 51
     elif args.dataset == 'kinetics':
@@ -44,6 +44,8 @@ def main():
     train_augmentation = model.get_augmentation()
 
     model = torch.nn.DataParallel(model, device_ids=args.gpus).cuda()
+
+    print("model:",model)
 
     if args.resume:
         if os.path.isfile(args.resume):
@@ -71,7 +73,7 @@ def main():
         data_length = 5
 
     train_loader = torch.utils.data.DataLoader(
-        TSNDataSet("/openbayes/home/data/", "/openbayes/home/data/ucf101/ucf101_train_split_1_rawframes.txt", num_segments=args.num_segments,
+        TSNDataSet("/openbayes/home/Tsn/data/", "/openbayes/home/Tsn/data/ucf101/ucf101_train_split_1_rawframes.txt", num_segments=args.num_segments,
                    new_length=data_length,
                    modality=args.modality,
                    image_tmpl="img_{:05d}.jpg" if args.modality in ["RGB", "RGBDiff"] else args.flow_prefix+"{}_{:05d}.jpg",
@@ -85,7 +87,7 @@ def main():
         num_workers=args.workers, pin_memory=True)
 
     val_loader = torch.utils.data.DataLoader(
-        TSNDataSet("/openbayes/home/data/", "/openbayes/home/data/ucf101/ucf101_val_split_1_rawframes.txt", num_segments=args.num_segments,
+        TSNDataSet("/openbayes/home/Tsn/data/", "/openbayes/home/Tsn/data/ucf101/ucf101_val_split_1_rawframes.txt", num_segments=args.num_segments,
                    new_length=data_length,
                    modality=args.modality,
                    image_tmpl="img_{:05d}.jpg" if args.modality in ["RGB", "RGBDiff"] else args.flow_prefix+"{}_{:05d}.jpg",
@@ -99,6 +101,9 @@ def main():
                    ])),
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
+
+    x, y = next(iter(train_loader))
+    print("trainloader size:",x.shape, y.shape)
 
     # define loss function (criterion) and optimizer
     if args.loss_type == 'nll':

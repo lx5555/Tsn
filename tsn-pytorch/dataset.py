@@ -104,12 +104,14 @@ class TSNDataSet(data.Dataset):
         for seg_ind in indices:
             p = int(seg_ind)
             for i in range(self.new_length):
-                seg_imgs = self._load_image('/openbayes/home/data/rawframes/'+ record.path, p)
+                seg_imgs = self._load_image('/openbayes/home/Tsn/data/rawframes/'+ record.path, p)
                 images.extend(seg_imgs)
                 if p < record.num_frames:
                     p += 1
 
+        print("ucf101 size:",images.shape)
         process_data = self.transform(images)
+        print("after transform size",process_data.shape)
         return process_data, record.label
 
     def __len__(self):
