@@ -45,7 +45,7 @@ def main():
 
     model = torch.nn.DataParallel(model, device_ids=args.gpus).cuda()
 
-    print("model:",model)
+    print("*********************************************************model:",model)
 
     if args.resume:
         if os.path.isfile(args.resume):
@@ -103,7 +103,7 @@ def main():
         num_workers=args.workers, pin_memory=True)
 
     x, y = next(iter(train_loader))
-    print("trainloader size:",x.shape, y.shape)
+    print("*************************************************************trainloader size:",x.shape, y.shape)
 
     # define loss function (criterion) and optimizer
     if args.loss_type == 'nll':

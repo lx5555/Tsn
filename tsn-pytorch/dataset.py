@@ -109,9 +109,9 @@ class TSNDataSet(data.Dataset):
                 if p < record.num_frames:
                     p += 1
 
-        print("ucf101 size:",images.shape)
+        print("****************************************ucf101 shape:",images.shape)
         process_data = self.transform(images)
-        print("after transform size",process_data.shape)
+        print("*******************************************after transform shape",process_data.shape)
         return process_data, record.label
 
     def __len__(self):

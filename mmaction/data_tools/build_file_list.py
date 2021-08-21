@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument('--level', type=int, default=2, choices=[1, 2])
     parser.add_argument('--format', type=str,
                         default='rawframes', choices=['rawframes', 'videos'])
-    parser.add_argument('--out_list_path', type=str, default='data/')
+    parser.add_argument('--out_list_path', type=str, default='../data/ucf101')
     parser.add_argument('--shuffle', action='store_true', default=False)
     args = parser.parse_args()
 
